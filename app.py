@@ -5,12 +5,13 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import gdown
 
+# Twoje dane (skrócone dla przejrzystości)
 MODEL_DIR = "model"
 MODEL_PATH = os.path.join(MODEL_DIR, "model.h5")
 MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"
 
 class_labels = [
-    # ... twoja lista klas tutaj bez zmian ...
+    # tu wklej pełną listę gatunków
 ]
 
 def download_model():
@@ -36,54 +37,82 @@ def tarantupedia_link(name):
         return f"https://www.tarantupedia.com/theraphosinae/{genus}/{species}"
 
 def main():
+    # Pasek top fixed, poza kontenerem
     st.markdown(
         """
         <style>
-        /* Pasek na górze z flexboxem */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 1rem;
+        /* Ukrywa domyślny nagłówek streamlit */
+        header {visibility: hidden;}
+        
+        /* Pasek na górze poza kontenerem */
+        .top-bar-outside {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 50px;
             background-color: #f0f2f6;
             border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 9999;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 10000;
+            font-family: Arial, sans-serif;
+            gap: 20px;
         }
-        .menu-buttons > button {
-            margin-left: 10px;
-            background: none;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
+
+        /* Trochę odstępu od góry dla kontenera streamlit, żeby nie przykrywał paska */
+        .appview-container {
+            padding-top: 60px !important;
+        }
+
+        /* Styl selectbox (w miarę możliwości) */
+        div[data-baseweb="select"] > div {
+            min-width: 150px;
         }
         </style>
-        """, unsafe_allow_html=True
+        """,
+        unsafe_allow_html=True,
     )
 
-    # Górny pasek: po lewej tytuł, po prawej język + menu
-    cols = st.columns([1, 3, 1, 3])  # tylko do layoutu
+    # Wyświetlamy "pasek" jako HTML + widgety Streamlit w jednej linii na prawo
+    # Niestety, streamlit nie pozwala na renderowanie widgetów w raw HTML, więc:
+    # możemy zrobić pseudo-pasek na górze i w nim wyrenderować widgety
 
-    with cols[0]:
-        st.markdown("## 🕷️ Theraphosidae Classifier")
+    # Do tego celu używamy kolumn, ale muszą być poza głównym kontenerem,
+    # więc trick: najpierw st.empty() i potem tam wstawiamy widgety.
 
-    # po prawej: język i menu
-    with cols[2]:
-        lang = st.selectbox("", ["English", "Polski"], key="language_top")
-
-    with cols[3]:
-        page = st.selectbox(
-            "" if lang == "English" else "",
-            options=[
-                "Prediction" if lang == "English" else "Predykcja",
-                "Species List" if lang == "English" else "Lista gatunków",
-                "Usage" if lang == "English" else "Instrukcja"
-            ],
-            key="page_top"
+    # Stwórz placeholder dla paska (możemy wyrenderować w nim widgety)
+    top_bar = st.container()
+    with top_bar:
+        # Ustawiamy pasek w html
+        st.markdown(
+            """
+            <div class="top-bar-outside">
+            """,
+            unsafe_allow_html=True,
         )
 
-    # Główna zawartość pod paskiem
+        # Widgety język i menu muszą być Streamlitowe, więc renderujemy je na samym dole tej sekcji
+        cols = st.columns([1,1])
+        with cols[0]:
+            lang = st.selectbox("", ["English", "Polski"], key="lang_outside", label_visibility="collapsed")
+        with cols[1]:
+            page = st.selectbox(
+                "",
+                options=[
+                    "Prediction" if lang == "English" else "Predykcja",
+                    "Species List" if lang == "English" else "Lista gatunków",
+                    "Usage" if lang == "English" else "Instrukcja"
+                ],
+                key="page_outside",
+                label_visibility="collapsed",
+            )
+
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    # Teraz reszta strony normalnie w kontenerze streamlit, ale z paddingiem od góry (z CSS wyżej)
     if page == ("Prediction" if lang == "English" else "Predykcja"):
         st.title("🕷️ Theraphosidae Species Classifier" if lang == "English" else "🕷️ Klasyfikator gatunków Theraphosidae")
 
@@ -134,4 +163,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
