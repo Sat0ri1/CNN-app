@@ -11,7 +11,7 @@ MODEL_PATH = os.path.join(MODEL_DIR, "model.h5")
 MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"
 
 class_labels = [
-    # ... (tu wstaw swoją listę etykiet, bez zmian)
+    # ... (tu wstaw swoją listę etykiet bez zmian)
 ]
 
 def download_model():
@@ -54,11 +54,11 @@ def tarantupedia_link(name):
 def main():
     set_bg_hack_url()
 
-    # Sidebar z wyborem języka i menu
     lang = st.sidebar.selectbox("Language / Język", ["English", "Polski"])
 
-    page = st.sidebar.radio(
-        "Menu" if lang == "English" else "Menu",
+    # JEDEN selectbox zamiast menu / radio
+    page = st.sidebar.selectbox(
+        "Select page / Wybierz stronę",
         options=[
             "Prediction" if lang == "English" else "Predykcja",
             "Species List" if lang == "English" else "Lista gatunków",
