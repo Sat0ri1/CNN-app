@@ -10,10 +10,22 @@ MODEL_DIR = "model"
 MODEL_PATH = os.path.join(MODEL_DIR, "model.h5")
 MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"  # link gdrive
 
-# Lista etykiet klas (przycięta dla czytelności)
+# Pełna lista etykiet klas
 class_labels = [
     "Acanthoscurria", "Amazonius germani", "Aphonopelma seemanni", "Augcephalus",
-    # ... cała lista ...
+    "Brachypelma albiceps", "Brachypelma baumgarteni", "Brachypelma boehmei",
+    "Brachypelma klaasi", "Brachypelma smithi", "Brachypelma vagans",
+    "Bumba cabocla", "Caribena versicolor", "Chromatopelma cyaneopubescens",
+    "Coremiocnemis tropix", "Cyclosternum fasciatum", "Cyriocosmus elegans",
+    "Davus pentaloris", "Dolichothele diamantinensis", "Encyocratella olivacea",
+    "Eupalaestrus campestratus", "Grammostola actaeon", "Grammostola alticeps",
+    "Grammostola pulchra", "Grammostola rosea", "Hapalopus sp. Colombia",
+    "Haplopelma lividum", "Lasiodora parahybana", "Lasiodora klugi",
+    "Lasiodora difficilis", "Lasiodora spinipes", "Megaphobema mesomelas",
+    "Nhandu chromatus", "Nhandu coloratovillosus", "Pamphobeteus antinous",
+    "Pamphobeteus nigricolor", "Phormictopus cancerides", "Pterinochilus murinus",
+    "Psalmopoeus irminia", "Psalmopoeus reduncus", "Schismatothele inflata",
+    "Stromatopelma calceatum", "Theraphosa blondi", "Theraphosa stirmi",
     "Vitalius chromatus", "Xenesthis immanis"
 ]
 
