@@ -5,13 +5,12 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import gdown
 
-# Ścieżki i link
 MODEL_DIR = "model"
 MODEL_PATH = os.path.join(MODEL_DIR, "model.h5")
 MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"
 
 class_labels = [
-    # ... (tu wstaw swoją listę etykiet bez zmian)
+    # ... twoja lista klas tutaj bez zmian ...
 ]
 
 def download_model():
@@ -27,21 +26,6 @@ def load_trained_model():
 
 model = load_trained_model()
 
-def set_bg_hack_url():
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            background: url("https://i.imgur.com/DBGp1Yv.png");
-            background-size: cover;
-            background-position: top right 18vw;
-            background-repeat: no-repeat;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
 def tarantupedia_link(name):
     parts = name.lower().split()
     if len(parts) == 1:
@@ -52,20 +36,54 @@ def tarantupedia_link(name):
         return f"https://www.tarantupedia.com/theraphosinae/{genus}/{species}"
 
 def main():
-    set_bg_hack_url()
-
-    lang = st.sidebar.selectbox("Language / Język", ["English", "Polski"])
-
-    # JEDEN selectbox zamiast menu / radio
-    page = st.sidebar.selectbox(
-        "Select page / Wybierz stronę",
-        options=[
-            "Prediction" if lang == "English" else "Predykcja",
-            "Species List" if lang == "English" else "Lista gatunków",
-            "Usage" if lang == "English" else "Instrukcja"
-        ]
+    st.markdown(
+        """
+        <style>
+        /* Pasek na górze z flexboxem */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: #f0f2f6;
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+        }
+        .menu-buttons > button {
+            margin-left: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        </style>
+        """, unsafe_allow_html=True
     )
 
+    # Górny pasek: po lewej tytuł, po prawej język + menu
+    cols = st.columns([1, 3, 1, 3])  # tylko do layoutu
+
+    with cols[0]:
+        st.markdown("## 🕷️ Theraphosidae Classifier")
+
+    # po prawej: język i menu
+    with cols[2]:
+        lang = st.selectbox("", ["English", "Polski"], key="language_top")
+
+    with cols[3]:
+        page = st.selectbox(
+            "" if lang == "English" else "",
+            options=[
+                "Prediction" if lang == "English" else "Predykcja",
+                "Species List" if lang == "English" else "Lista gatunków",
+                "Usage" if lang == "English" else "Instrukcja"
+            ],
+            key="page_top"
+        )
+
+    # Główna zawartość pod paskiem
     if page == ("Prediction" if lang == "English" else "Predykcja"):
         st.title("🕷️ Theraphosidae Species Classifier" if lang == "English" else "🕷️ Klasyfikator gatunków Theraphosidae")
 
@@ -116,3 +134,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
