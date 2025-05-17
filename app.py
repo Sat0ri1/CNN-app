@@ -101,7 +101,7 @@ def main():
             url = tarantupedia_link(predicted_label)
             info_text = "Click to learn more" if lang == "English" else "Kliknij, aby dowiedzieć się więcej"
 
-            st.image(img, caption="Uploaded Image", use_container_width=True)
+            st.image(uploaded_file, caption="Uploaded Image")
             st.markdown(f"### ✅ Prediction: [{predicted_label}]({url})")
             st.markdown(f"*{info_text}*")
 
