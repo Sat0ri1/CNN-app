@@ -8,36 +8,13 @@ import gdown
 # Ścieżki i link
 MODEL_DIR = "model"
 MODEL_PATH = os.path.join(MODEL_DIR, "model.h5")
-MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"  # link gdrive
+MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"
 
-# Pełna lista etykiet klas
 class_labels = [
-    "Acanthoscurria", "Amazonius germani", "Aphonopelma seemanni", "Augcephalus", "Avicularia avicularia", "Avicularia juruensis",
-    "Avicularia minatrix", "Avicularia purpurea", "Birupes simoroxigorum", "Brachypelma albiceps", "Brachypelma auratum",
-    "Brachypelma baumgarteni", "Brachypelma boehmei", "Brachypelma emilia", "Brachypelma hamorii or smithi",
-    "Brachypelma klaasi", "Bumba horrida or tapajos", "Caribena laeta", "Caribena versicolor", "Ceratogyrus brachycephalus",
-    "Ceratogyrus darlingi", "Ceratogyrus marshalli", "Ceratogyrus meridionalis", "Ceratogyrus sanderi", "Chilobrachys dyscolus",
-    "Chilobrachys fimbriatus", "Chilobrachys huahini", "Chilobrachys natanicharum", "Chromatopelma cyaneopubescens",
-    "Cilantica devamatha", "Citharacanthus cyaneus", "Cyriocosmus aueri or bertae", "Cyriocosmus bicolor",
-    "Cyriocosmus elegans", "Cyriocosmus leetzi", "Cyriocosmus perezmilesi", "Cyriocosmus ritae",
-    "Cyriopagopus (albostriatus, longipes, minax, paganus or vonwrithi", "Cyriopagopus hainanus", "Cyriopagopus lividus",
-    "Cyriopagopus schmidti", "Davus", "Dolichothele diamantinensis", "Encyocratella olivacea", "Ephebopus cyanognathus",
-    "Ephebopus murinus", "Eucratoscelus pachypus", "Grammostola iheringi or actaeon", "Grammostola pulchra",
-    "Grammostola pulchripes", "Grammostola rosea", "Hapalopus", "Haplocosmia himalayana", "Harpactira cafreriana",
-    "Harpactira pulchripes", "Heteroscodra maculata", "Heterothele gabonensis", "Holothele longipes", "Homoeomma",
-    "Hysterocrates", "Idiothele mira", "Kochiana brunnipes", "Lampropelma nigerrimum or Phormingochilus arboricola",
-    "Lasiocyano sazimai", "Lasiodora", "Megaphobema robustum", "Monocentropus balfouri", "Neoholothele incei",
-    "Nhandu coloratovillosus", "Nhandu tripepii", "Omothymus schioedtei", "Omothymus violaceopes",
-    "Ornithoctonus aureotibialis", "Pamphobeteus antinous", "Pamphobeteus ultramarinus", "Pelinobus muticus",
-    "Phormictopus auratus", "Phormingochilus everetti", "Poecilotheria", "Poecilotheria formosa", "Poecilotheria metallica",
-    "Poecilotheria ornata", "Poecilotheria rufilata", "Poecilotheria subfusca", "Psalmopoeus cambridgei", "Psalmopoeus irminia",
-    "Psalmopoeus pulcher", "Psalmopoeus reduncus", "Psalmopoeus victori", "Pterinochilus lugardi", "Pterinochilus murinus",
-    "Selenobrachys philippinus", "Stromatopelma calceatum", "Tapinauchenius plumipes", "Theraphosa", "Thrixopelma ockerti",
-    "Tliltocatl albopilosus", "Tliltocatl vagans or kahlenbergi", "Typhochlaena seladonia", "Vitalius chromatus", "Xenesthis immanis"
+    # ... (tu wstaw swoją listę etykiet, bez zmian)
 ]
 
 def download_model():
-    """Pobiera model, jeśli jeszcze go nie ma."""
     if not os.path.exists(MODEL_PATH):
         os.makedirs(MODEL_DIR, exist_ok=True)
         with st.spinner('📥 Pobieranie modelu...'):
@@ -45,30 +22,27 @@ def download_model():
 
 @st.cache_resource
 def load_trained_model():
-    """Ładuje model Keras z dysku."""
     download_model()
     return load_model(MODEL_PATH)
 
 model = load_trained_model()
 
 def set_bg_hack_url():
-    """Ustawia tło z obrazem."""
     st.markdown(
-         """
-         <style>
-         .stApp {
-             background: url("https://i.imgur.com/DBGp1Yv.png");
-             background-size: cover;
-             background-position: top right 18vw;
-             background-repeat: no-repeat;
-         }
-         </style>
-         """,
-         unsafe_allow_html=True
-     )
+        """
+        <style>
+        .stApp {
+            background: url("https://i.imgur.com/DBGp1Yv.png");
+            background-size: cover;
+            background-position: top right 18vw;
+            background-repeat: no-repeat;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
 
 def tarantupedia_link(name):
-    """Generuje link do tarantupedia.com"""
     parts = name.lower().split()
     if len(parts) == 1:
         return f"https://www.tarantupedia.com/theraphosinae/{parts[0]}"
@@ -80,31 +54,16 @@ def tarantupedia_link(name):
 def main():
     set_bg_hack_url()
 
-    # Układ górnego paska: język i menu witryn
-    cols = st.columns([10, 1, 1])
-    cols[1].markdown("### Language")
-    lang = cols[2].selectbox(
-        "",
-        options=["English", "Polski"],
-        label_visibility="collapsed"
-    )
+    # Sidebar z wyborem języka i menu
+    lang = st.sidebar.selectbox("Language / Język", ["English", "Polski"])
 
-    # Rozwijane menu witryn z ikoną hamburgera
-    with cols[0]:
-        with st.expander("☰ Websites", expanded=False):
-            st.markdown("- [Tarantupedia](https://www.tarantupedia.com)")
-            st.markdown("- [Wikimedia](https://commons.wikimedia.org/wiki/Category:Theraphosidae)")
-            st.markdown("- [Wikipedia](https://en.wikipedia.org/wiki/Tarantula)")
-            st.markdown("- [Arachnoboards](https://arachnoboards.com)")
-
-    page = st.radio(
+    page = st.sidebar.radio(
         "Menu" if lang == "English" else "Menu",
         options=[
             "Prediction" if lang == "English" else "Predykcja",
             "Species List" if lang == "English" else "Lista gatunków",
             "Usage" if lang == "English" else "Instrukcja"
-        ],
-        horizontal=True
+        ]
     )
 
     if page == ("Prediction" if lang == "English" else "Predykcja"):
