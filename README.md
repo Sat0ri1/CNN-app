@@ -37,11 +37,11 @@ cd CNN-app
 ```bash
 pip install -r requirements
 ```
-3a. Run model on your computer without strimlit
+3.  Either run model on your computer without strimlit
 ```bash
 py model_run.py
 ```
-3b. Run model on your computer with streamlit
+4. Or run model on your computer with streamlit
 ```bash
 streamlit run app.py
 ```
