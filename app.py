@@ -2,10 +2,25 @@ import streamlit as st
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
+import os
+import requests
 
-# Load model once
+# Model download function
+def download_model():
+    url = 'https://drive.google.com/uc?export=download&id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc'
+    os.makedirs('model', exist_ok=True)
+    with requests.get(url, stream=True) as r:
+        r.raise_for_status()
+        with open('model/model.h5', 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+# Load model once, download if not exists
 @st.cache_resource
 def load_trained_model():
+    if not os.path.exists('model/model.h5'):
+        with st.spinner('Downloading model, please wait...'):
+            download_model()
     return load_model('model/model.h5')
 
 model = load_trained_model()
@@ -101,3 +116,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
