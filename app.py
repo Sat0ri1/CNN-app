@@ -11,23 +11,20 @@ MODEL_PATH = os.path.join(MODEL_DIR, "model.h5")
 MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"  # link gdrive
 
 # Pełna lista etykiet klas
-class_labels = [
-    "Acanthoscurria", "Amazonius germani", "Aphonopelma seemanni", "Augcephalus",
-    "Brachypelma albiceps", "Brachypelma baumgarteni", "Brachypelma boehmei",
-    "Brachypelma klaasi", "Brachypelma smithi", "Brachypelma vagans",
-    "Bumba cabocla", "Caribena versicolor", "Chromatopelma cyaneopubescens",
-    "Coremiocnemis tropix", "Cyclosternum fasciatum", "Cyriocosmus elegans",
-    "Davus pentaloris", "Dolichothele diamantinensis", "Encyocratella olivacea",
-    "Eupalaestrus campestratus", "Grammostola actaeon", "Grammostola alticeps",
-    "Grammostola pulchra", "Grammostola rosea", "Hapalopus sp. Colombia",
-    "Haplopelma lividum", "Lasiodora parahybana", "Lasiodora klugi",
-    "Lasiodora difficilis", "Lasiodora spinipes", "Megaphobema mesomelas",
-    "Nhandu chromatus", "Nhandu coloratovillosus", "Pamphobeteus antinous",
-    "Pamphobeteus nigricolor", "Phormictopus cancerides", "Pterinochilus murinus",
-    "Psalmopoeus irminia", "Psalmopoeus reduncus", "Schismatothele inflata",
-    "Stromatopelma calceatum", "Theraphosa blondi", "Theraphosa stirmi",
-    "Vitalius chromatus", "Xenesthis immanis"
-]
+class_labels = ["Acanthoscurria", "Amazonius germani", "Aphonopelma seemanni", "Augcephalus", "Avicularia avicularia", "Avicularia juruensis", "Avicularia minatrix", "Avicularia purpurea", 
+                "Birupes simoroxigorum", "Brachypelma albiceps", "Brachypelma auratum", "Brachypelma baumgarteni", "Brachypelma boehmei", "Brachypelma emilia", "Brachypelma hamorii or smithi", 
+                "Brachypelma klaasi", "Bumba horrida or tapajos", "Caribena laeta", "Caribena versicolor", "Ceratogyrus brachycephalus", "Ceratogyrus darlingi", "Ceratogyrus marshalli", 
+                "Ceratogyrus meridionalis", "Ceratogyrus sanderi", "Chilobrachys dyscolus", "Chilobrachys fimbriatus", "Chilobrachys huahini", "Chilobrachys natanicharum", "Chromatopelma cyaneopubescens", 
+                "Cilantica devamatha", "Citharacanthus cyaneus", "Cyriocosmus aueri or bertae", "Cyriocosmus bicolor", "Cyriocosmus elegans", "Cyriocosmus leetzi", "Cyriocosmus perezmilesi", "Cyriocosmus ritae", 
+                "Cyriopagopus (albostriatus, longipes, minax, paganus or vonwrithi", "Cyriopagopus hainanus", "Cyriopagopus lividus", "Cyriopagopus schmidti", "Davus", "Dolichothele diamantinensis", 
+                "Encyocratella olivacea", "Ephebopus cyanognathus", "Ephebopus murinus", "Eucratoscelus pachypus", "Grammostola iheringi or actaeon", "Grammostola pulchra", "Grammostola pulchripes", 
+                "Grammostola rosea", "Hapalopus", "Haplocosmia himalayana", "Harpactira cafreriana", "Harpactira pulchripes", "Heteroscodra maculata", "Heterothele gabonensis", "Holothele longipes", 
+                "Homoeomma", "Hysterocrates", "Idiothele mira", "Kochiana brunnipes", "Lampropelma nigerrimum or Phormingochilus arboricola", "Lasiocyano sazimai", "Lasiodora", "Megaphobema robustum", 
+                "Monocentropus balfouri", "Neoholothele incei", "Nhandu coloratovillosus", "Nhandu tripepii", "Omothymus schioedtei", "Omothymus violaceopes", "Ornithoctonus aureotibialis", 
+                "Pamphobeteus antinous", "Pamphobeteus ultramarinus", "Pelinobus muticus", "Phormictopus auratus", "Phormingochilus everetti", "Poecilotheria", "Poecilotheria formosa", 
+                "Poecilotheria metallica", "Poecilotheria ornata", "Poecilotheria rufilata", "Poecilotheria subfusca", "Psalmopoeus cambridgei", "Psalmopoeus irminia", "Psalmopoeus pulcher", 
+                "Psalmopoeus reduncus", "Psalmopoeus victori", "Pterinochilus lugardi", "Pterinochilus murinus", "Selenobrachys philippinus", "Stromatopelma calceatum", "Tapinauchenius plumipes", "Theraphosa", 
+                "Thrixopelma ockerti", "Tliltocatl albopilosus", "Tliltocatl vagans or kahlenbergi", "Typhochlaena seladonia", "Vitalius chromatus", "Xenesthis immanis"]
 
 def download_model():
     """Pobiera model, jeśli jeszcze go nie ma."""
