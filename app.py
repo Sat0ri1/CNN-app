@@ -5,32 +5,53 @@ import numpy as np
 import os
 import requests
 
-# Model download function
+MODEL_DIR = 'model'
+MODEL_PATH = os.path.join(MODEL_DIR, 'model.h5')
+MODEL_URL = 'https://drive.google.com/uc?export=download&id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc'
+
 def download_model():
-    url = 'https://drive.google.com/uc?export=download&id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc'
-    os.makedirs('model', exist_ok=True)
-    with requests.get(url, stream=True) as r:
+    os.makedirs(MODEL_DIR, exist_ok=True)
+    with requests.get(MODEL_URL, stream=True) as r:
         r.raise_for_status()
-        with open('model/model.h5', 'wb') as f:
+        with open(MODEL_PATH, 'wb') as f:
             for chunk in r.iter_content(chunk_size=8192):
                 f.write(chunk)
 
-# Load model once, download if not exists
+if not os.path.exists(MODEL_PATH):
+    with st.spinner('Downloading model, please wait...'):
+        download_model()
+
 @st.cache_resource
 def load_trained_model():
-    if not os.path.exists('model/model.h5'):
-        with st.spinner('Downloading model, please wait...'):
-            download_model()
-    return load_model('model/model.h5')
+    return load_model(MODEL_PATH)
 
 model = load_trained_model()
 
-# Class labels (skrót - wrzuć pełną listę do pliku albo tu)
 class_labels = [
-    "Acanthoscurria", "Amazonius germani", "Aphonopelma seemanni",
-    "Augcephalus", "Avicularia avicularia", "Avicularia juruensis",
-    "Poecilotheria", "Poecilotheria metallica"
-    # ... dodaj resztę
+    "Acanthoscurria", "Amazonius germani", "Aphonopelma seemanni", "Augcephalus", 
+    "Avicularia avicularia", "Avicularia juruensis", "Avicularia minatrix", "Avicularia purpurea", 
+    "Birupes simoroxigorum", "Brachypelma albiceps", "Brachypelma auratum", "Brachypelma baumgarteni", 
+    "Brachypelma boehmei", "Brachypelma emilia", "Brachypelma hamorii or smithi", "Brachypelma klaasi", 
+    "Bumba horrida or tapajos", "Caribena laeta", "Caribena versicolor", "Ceratogyrus brachycephalus", 
+    "Ceratogyrus darlingi", "Ceratogyrus marshalli", "Ceratogyrus meridionalis", "Ceratogyrus sanderi", 
+    "Chilobrachys dyscolus", "Chilobrachys fimbriatus", "Chilobrachys huahini", "Chilobrachys natanicharum", 
+    "Chromatopelma cyaneopubescens", "Cilantica devamatha", "Citharacanthus cyaneus", "Cyriocosmus aueri or bertae", 
+    "Cyriocosmus bicolor", "Cyriocosmus elegans", "Cyriocosmus leetzi", "Cyriocosmus perezmilesi", "Cyriocosmus ritae", 
+    "Cyriopagopus (albostriatus, longipes, minax, paganus or vonwrithi", "Cyriopagopus hainanus", "Cyriopagopus lividus", 
+    "Cyriopagopus schmidti", "Davus", "Dolichothele diamantinensis", "Encyocratella olivacea", "Ephebopus cyanognathus", 
+    "Ephebopus murinus", "Eucratoscelus pachypus", "Grammostola iheringi or actaeon", "Grammostola pulchra", 
+    "Grammostola pulchripes", "Grammostola rosea", "Hapalopus", "Haplocosmia himalayana", "Harpactira cafreriana", 
+    "Harpactira pulchripes", "Heteroscodra maculata", "Heterothele gabonensis", "Holothele longipes", "Homoeomma", 
+    "Hysterocrates", "Idiothele mira", "Kochiana brunnipes", "Lampropelma nigerrimum or Phormingochilus arboricola", 
+    "Lasiocyano sazimai", "Lasiodora", "Megaphobema robustum", "Monocentropus balfouri", "Neoholothele incei", 
+    "Nhandu coloratovillosus", "Nhandu tripepii", "Omothymus schioedtei", "Omothymus violaceopes", 
+    "Ornithoctonus aureotibialis", "Pamphobeteus antinous", "Pamphobeteus ultramarinus", "Pelinobus muticus", 
+    "Phormictopus auratus", "Phormingochilus everetti", "Poecilotheria", "Poecilotheria formosa", "Poecilotheria metallica", 
+    "Poecilotheria ornata", "Poecilotheria rufilata", "Poecilotheria subfusca", "Psalmopoeus cambridgei", 
+    "Psalmopoeus irminia", "Psalmopoeus pulcher", "Psalmopoeus reduncus", "Psalmopoeus victori", "Pterinochilus lugardi", 
+    "Pterinochilus murinus", "Selenobrachys philippinus", "Stromatopelma calceatum", "Tapinauchenius plumipes", 
+    "Theraphosa", "Thrixopelma ockerti", "Tliltocatl albopilosus", "Tliltocatl vagans or kahlenbergi", "Typhochlaena seladonia", 
+    "Vitalius chromatus", "Xenesthis immanis"
 ]
 
 def set_bg_hack_url():
@@ -51,10 +72,8 @@ def set_bg_hack_url():
 def tarantupedia_link(name):
     parts = name.lower().split()
     if len(parts) == 1:
-        # genus only
         return f"https://www.tarantupedia.com/theraphosinae/{parts[0]}"
     else:
-        # genus + species
         genus = parts[0]
         species = '-'.join(parts)
         return f"https://www.tarantupedia.com/theraphosinae/{genus}/{species}"
@@ -62,10 +81,8 @@ def tarantupedia_link(name):
 def main():
     set_bg_hack_url()
     
-    # Language selection
     lang = st.sidebar.selectbox("Language / Język", ["English", "Polski"])
 
-    # Sidebar navigation
     page = st.sidebar.radio(
         "Menu" if lang == "English" else "Menu",
         ("Prediction" if lang == "English" else "Predykcja"),
@@ -116,4 +133,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
