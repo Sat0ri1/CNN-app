@@ -10,27 +10,24 @@ MODEL_DIR = "model"
 MODEL_PATH = os.path.join(MODEL_DIR, "model.h5")
 MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"  # link gdrive
 
-# Lista etykiet klas
-class_labels = [  # przycięta dla czytelności – pełna w Twoim oryginale
+# Lista etykiet klas (przycięta dla czytelności)
+class_labels = [
     "Acanthoscurria", "Amazonius germani", "Aphonopelma seemanni", "Augcephalus",
     # ... cała lista ...
     "Vitalius chromatus", "Xenesthis immanis"
 ]
 
 def download_model():
-    """Pobiera model jeśli nie istnieje."""
-    if not os.path.exists(MODEL_PATH) or os.path.getsize(MODEL_PATH) == 0:
+    """Pobiera model, jeśli jeszcze go nie ma."""
+    if not os.path.exists(MODEL_PATH):
+        os.makedirs(MODEL_DIR, exist_ok=True)
         with st.spinner('📥 Pobieranie modelu...'):
-            os.makedirs(MODEL_DIR, exist_ok=True)
             gdown.download(MODEL_URL, MODEL_PATH, quiet=True)
 
 @st.cache_resource
 def load_trained_model():
     """Ładuje model Keras z dysku."""
     download_model()
-    if not os.path.exists(MODEL_PATH) or os.path.getsize(MODEL_PATH) == 0:
-        st.error("❌ Nie udało się pobrać modelu.")
-        st.stop()
     return load_model(MODEL_PATH)
 
 model = load_trained_model()
@@ -66,7 +63,6 @@ def main():
 
     lang = st.sidebar.selectbox("Language / Język", ["English", "Polski"])
 
-    # Poprawione przekazanie opcji do radio
     page = st.sidebar.radio(
         "Menu" if lang == "English" else "Menu",
         options=[
