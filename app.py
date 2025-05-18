@@ -153,9 +153,8 @@ def main():
             "Spider Shop": "https://www.facebook.com/spidershoppl?locale=pl_PL",
             "SpidersOnline": "https://www.facebook.com/spidershoppl?locale=pl_PL",
             "Arent": "https://www.facebook.com/arent.spiders?locale=pl_PL",
-            "Arachnohobbia": "https://www.facebook.com/profile.php?id=100064755876648&locale=pl_PL",
-          
-        }
+            "Arachnohobbia": "https://www.facebook.com/profile.php?id=100064755876648&locale=pl_PL"
+          }
 
         for name, fb_link in breeders.items():
             st.markdown(f"- [{name}]({fb_link})")
