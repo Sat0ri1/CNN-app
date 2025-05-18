@@ -127,6 +127,8 @@ def main():
             - If the species is not in the list but its genus is, the app will likely identify the genus correctly but assign the species to one from the list.
             - App recognizes tarantulas in adult colouration, in cases where sexual dymorphism is very relevant app recognizes only female colouration only. 
             - Unusal poses and colouration change freshly post molt or colouration vanishing long time after molt may impact prediction accuracy.
+            - Prediction accuracy is approximately 98%. If you notice above 2/100 missed prediction which is avarage fot this model, let me know.
+            - For any feedback or questions contact me on Facebook (Paweł Grygielski)
             """)
         else:
             st.markdown("""
@@ -135,6 +137,8 @@ def main():
             - W przypadku gatunków nieobecnych na liście, ale obecnych ich rodzajów, aplikacja najprawdopodobniej prawidłowo rozpozna rodzaj, ale przypisze gatunek do jednego z dostępnych na liście.
             - Aplikacja służy do rozpoznawaniu ptaszników o ubarwieniu osobnika dorosłego, w przypadkach gdy dymorfizm płciowy jest znaczący aplikacja rozpoznaje tylko samice.
             - Niestandardowe ustawienie pająka, zmiany kolorów ze względu na śiweżo przebytą wylinkę lub zanik kolorów ze względu na długi okres bez procesu przechodzenia wylinki mogą wpłynąć na jakość predykcji
+            - Kalkulowana jakość predykcji to około 98%. Jeśli zauważysz, że aplikacja myli się znacząco częściej niż w 2/100 przypadkach, możesz to zgłosić.
+            - Wszelkie zgłoszenia i pytania można wysyłać w wiadomości prywatnej na moim prywatnym Facebooku (Paweł Grygielski)
             """)
 
     elif page == ("Credits" if lang == "English" else "Podziękowania"):
