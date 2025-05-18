@@ -47,7 +47,7 @@ def set_bg_hack_url():
          f"""
          <style>
          .stApp {{
-             background: url("https://i.imgur.com/27EU8Ta.png");
+             background: url("https://imgur.com/27EU8Ta");
              background-size: cover;
              background-position: top right 18vw;
              background-repeat: no-repeat;
