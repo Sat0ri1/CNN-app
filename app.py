@@ -65,7 +65,7 @@ def tarantupedia_link(name):
     else:
         genus = parts[0]
         species = '-'.join(parts)
-        return f"https://www.tarantupedia.com/theraphosinae/{genus}/{species}"
+        return f"https://www.tarantupedia.com/theraphosinae/{genus}-{species}"
 
 def main():
     set_bg_hack_url()
