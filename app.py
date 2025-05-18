@@ -1,4 +1,4 @@
-import streamlit as st
+erimport streamlit as st
 import os
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
@@ -49,7 +49,7 @@ def set_bg_hack_url():
          .stApp {{
              background: url("https://i.imgur.com/27EU8Ta.png");
              background-size: cover;
-             background-position: top right 18vw;
+             background-position: center;
              background-repeat: no-repeat;
          }}
          </style>
