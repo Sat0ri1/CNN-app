@@ -8,7 +8,8 @@ import gdown
 # Ścieżki i link
 MODEL_DIR = "model"
 MODEL_PATH = os.path.join(MODEL_DIR, "model.h5")
-MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"  # link gdrive
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1rUjVR49uOSS-n9es9-CO07OeLTjYmEKQ
+"  # link gdrive
 
 # Pełna lista etykiet klas
 class_labels = ["Acanthoscurria", "Amazonius germani", "Aphonopelma seemanni", "Augcephalus", "Avicularia avicularia", "Avicularia juruensis", "Avicularia minatrix", "Avicularia purpurea", 
