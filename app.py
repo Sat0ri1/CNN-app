@@ -1,18 +1,22 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import os
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
 import gdown
 
-# Twoje dane (skrócone dla przejrzystości)
+# Twoje dane (tu wstaw pełną listę gatunków)
+class_labels = [
+    "Aphonopelma chalcodes",
+    "Brachypelma smithi",
+    "Grammostola rosea",
+    # ... pełna lista gatunków ...
+]
+
 MODEL_DIR = "model"
 MODEL_PATH = os.path.join(MODEL_DIR, "model.h5")
 MODEL_URL = "https://drive.google.com/uc?id=1fLsy6SAk-cGi5c06XVegJPjxfb0Bclxc"
-
-class_labels = [
-    # tu wklej pełną listę gatunków
-]
 
 def download_model():
     if not os.path.exists(MODEL_PATH):
@@ -36,88 +40,95 @@ def tarantupedia_link(name):
         species = '-'.join(parts)
         return f"https://www.tarantupedia.com/theraphosinae/{genus}/{species}"
 
+def get_query_params():
+    query_params = st.experimental_get_query_params()
+    page = query_params.get("page", ["prediction"])[0]
+    lang = query_params.get("lang", ["en"])[0]
+    return page, lang
+
+def render_top_bar(page, lang):
+    html = f"""
+    <style>
+    .topnav {{
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #f0f2f6;
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 9999;
+        font-family: sans-serif;
+    }}
+    .topnav select {{
+        margin-right: 10px;
+        padding: 4px;
+        font-size: 14px;
+    }}
+    .dropdown {{
+        position: relative;
+        display: inline-block;
+    }}
+    .dropbtn {{
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        user-select: none;
+    }}
+    .dropdown-content {{
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 10000;
+    }}
+    .dropdown-content a {{
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }}
+    .dropdown-content a:hover {{
+        background-color: #ddd;
+    }}
+    .dropdown:hover .dropdown-content {{
+        display: block;
+    }}
+    </style>
+    <div class="topnav">
+        <select onchange="window.location.search='lang='+this.value+'&page={page}'">
+            <option value="en" {"selected" if lang == "en" else ""}>English</option>
+            <option value="pl" {"selected" if lang == "pl" else ""}>Polski</option>
+        </select>
+        <div class="dropdown">
+            <button class="dropbtn">&#9776;</button>
+            <div class="dropdown-content">
+                <a href="?lang={lang}&page=prediction">{'Prediction' if lang == 'en' else 'Predykcja'}</a>
+                <a href="?lang={lang}&page=species">{'Species List' if lang == 'en' else 'Lista gatunków'}</a>
+                <a href="?lang={lang}&page=usage">{'Usage' if lang == 'en' else 'Instrukcja'}</a>
+            </div>
+        </div>
+    </div>
+    <div style="height: 60px;"></div>
+    """
+    components.html(html, height=70)
+
 def main():
-    # Pasek top fixed, poza kontenerem
-    st.markdown(
-        """
-        <style>
-        /* Ukrywa domyślny nagłówek streamlit */
-        header {visibility: hidden;}
-        
-        /* Pasek na górze poza kontenerem */
-        .top-bar-outside {
-            position: fixed;
-            top: 0;
-            right: 0;
-            left: 0;
-            height: 50px;
-            background-color: #f0f2f6;
-            border-bottom: 1px solid #ddd;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 0 20px;
-            z-index: 10000;
-            font-family: Arial, sans-serif;
-            gap: 20px;
-        }
+    page, lang = get_query_params()
+    render_top_bar(page, lang)
 
-        /* Trochę odstępu od góry dla kontenera streamlit, żeby nie przykrywał paska */
-        .appview-container {
-            padding-top: 60px !important;
-        }
-
-        /* Styl selectbox (w miarę możliwości) */
-        div[data-baseweb="select"] > div {
-            min-width: 150px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    # Wyświetlamy "pasek" jako HTML + widgety Streamlit w jednej linii na prawo
-    # Niestety, streamlit nie pozwala na renderowanie widgetów w raw HTML, więc:
-    # możemy zrobić pseudo-pasek na górze i w nim wyrenderować widgety
-
-    # Do tego celu używamy kolumn, ale muszą być poza głównym kontenerem,
-    # więc trick: najpierw st.empty() i potem tam wstawiamy widgety.
-
-    # Stwórz placeholder dla paska (możemy wyrenderować w nim widgety)
-    top_bar = st.container()
-    with top_bar:
-        # Ustawiamy pasek w html
-        st.markdown(
-            """
-            <div class="top-bar-outside">
-            """,
-            unsafe_allow_html=True,
-        )
-
-        # Widgety język i menu muszą być Streamlitowe, więc renderujemy je na samym dole tej sekcji
-        cols = st.columns([1,1])
-        with cols[0]:
-            lang = st.selectbox("", ["English", "Polski"], key="lang_outside", label_visibility="collapsed")
-        with cols[1]:
-            page = st.selectbox(
-                "",
-                options=[
-                    "Prediction" if lang == "English" else "Predykcja",
-                    "Species List" if lang == "English" else "Lista gatunków",
-                    "Usage" if lang == "English" else "Instrukcja"
-                ],
-                key="page_outside",
-                label_visibility="collapsed",
-            )
-
-        st.markdown("</div>", unsafe_allow_html=True)
-
-    # Teraz reszta strony normalnie w kontenerze streamlit, ale z paddingiem od góry (z CSS wyżej)
-    if page == ("Prediction" if lang == "English" else "Predykcja"):
-        st.title("🕷️ Theraphosidae Species Classifier" if lang == "English" else "🕷️ Klasyfikator gatunków Theraphosidae")
+    if page == "prediction":
+        st.title("🕷️ Theraphosidae Species Classifier" if lang == "en" else "🕷️ Klasyfikator gatunków Theraphosidae")
 
         uploaded_file = st.file_uploader(
-            "Upload an image (top view of full spider)" if lang == "English" else "Prześlij zdjęcie (cały pająk, widok z góry)",
+            "Upload an image (top view of full spider)" if lang == "en" else "Prześlij zdjęcie (cały pająk, widok z góry)",
             type=["jpg", "jpeg", "png"]
         )
 
@@ -131,35 +142,33 @@ def main():
             predicted_label = class_labels[predicted_index]
 
             url = tarantupedia_link(predicted_label)
-            info_text = "Click to learn more" if lang == "English" else "Kliknij, aby dowiedzieć się więcej"
+            info_text = "Click to learn more" if lang == "en" else "Kliknij, aby dowiedzieć się więcej"
 
             st.image(uploaded_file, caption="Uploaded Image")
             st.markdown(f"### ✅ Prediction: [{predicted_label}]({url})")
             st.markdown(f"*{info_text}*")
 
-    elif page == ("Species List" if lang == "English" else "Lista gatunków"):
-        st.title("Recognized Species" if lang == "English" else "Rozpoznawane gatunki")
+    elif page == "species":
+        st.title("Recognized Species" if lang == "en" else "Rozpoznawane gatunki")
         st.write(
             "The model recognizes the following species and genera (mainly from the pet trade):"
-            if lang == "English"
+            if lang == "en"
             else "Model rozpoznaje następujące gatunki i rodzaje (głównie popularne w handlu):"
         )
         st.write(", ".join(class_labels))
 
-    elif page == ("Usage" if lang == "English" else "Instrukcja"):
-        st.title("Usage Instructions" if lang == "English" else "Instrukcja użycia")
-        if lang == "English":
-            st.markdown("""
-            - Upload a photo of the full spider, taken from above.
-            - The app recognizes only the species listed in the Species List tab.
-            - If the species is not in the list but its genus is, the app will likely identify the genus correctly but assign the species to one from the list.
-            """)
-        else:
-            st.markdown("""
-            - Prześlij zdjęcie całego pająka, zrobione z góry.
-            - Aplikacja rozpoznaje tylko gatunki wypisane na liście gatunków.
-            - W przypadku gatunków nieobecnych na liście, ale obecnych ich rodzajów, aplikacja najprawdopodobniej prawidłowo rozpozna rodzaj, ale przypisze gatunek do jednego z dostępnych na liście.
-            """)
+    elif page == "usage":
+        st.title("Usage Instructions" if lang == "en" else "Instrukcja użycia")
+        st.markdown("""
+        - Upload a photo of the full spider, taken from above.
+        - The app recognizes only the species listed in the Species List tab.
+        - If the species is not in the list but its genus is, the app will likely identify the genus correctly but assign the species to one from the list.
+        """ if lang == "en" else """
+        - Prześlij zdjęcie całego pająka, zrobione z góry.
+        - Aplikacja rozpoznaje tylko gatunki wypisane na liście gatunków.
+        - W przypadku gatunków nieobecnych na liście, ale obecnych ich rodzajów, aplikacja najprawdopodobniej prawidłowo rozpozna rodzaj, ale przypisze gatunek do jednego z dostępnych na liście.
+        """)
 
 if __name__ == "__main__":
     main()
+
