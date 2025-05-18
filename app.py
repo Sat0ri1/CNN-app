@@ -102,7 +102,7 @@ def main():
             info_text = "Click to learn more" if lang == "English" else "Kliknij, aby dowiedzieć się więcej"
 
             st.image(uploaded_file, caption="Uploaded Image")
-            st.markdown(f"### ✅ Prediction: [{predicted_label}]({url})")
+            st.markdown(f"### Prediction: [{predicted_label}]({url})")
             st.markdown(f"*{info_text}*")
 
     elif page == ("Species List" if lang == "English" else "Lista gatunków"):
