@@ -25,8 +25,6 @@ def load_trained_model():
     download_model()
     return load_model(MODEL_PATH)
 
-model = load_trained_model()
-
 def tarantupedia_link(name):
     parts = name.lower().split()
     if len(parts) == 1:
@@ -259,11 +257,12 @@ def render_top_bar(page, lang):
 def main():
     st.set_page_config(page_title="Theraphosidae Classifier", layout="wide", initial_sidebar_state="collapsed")
 
-    # Użyj st.query_params bo st.experimental_get_query_params jest przestarzałe
+    # Pobierz parametry zapytania
     params = st.query_params
     lang = params.get("lang", ["en"])[0]
     page = params.get("page", ["prediction"])[0]
 
+    # Wstrzyknięcie stylów ogólnych (tu możesz zostawić markdown bo to CSS, nie JS)
     st.markdown(
         """
         <style>
@@ -350,5 +349,6 @@ def main():
             """)
 
 if __name__ == "__main__":
+    model = load_trained_model()
     main()
 
