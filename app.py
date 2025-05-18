@@ -42,15 +42,13 @@ def inject_topbar_assets():
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
 
     <style>
-      /* Ukryj domyślny Streamlit header */
-      header.css-2trqyj.egzxvld1 {
-          display: none;
-      }
+      /* Ukryj domyślny Streamlit header i footer */
+      header, footer { display: none !important; }
       /* Centrowanie i odstęp pod nasz topbar */
       .block-container {
           max-width: 800px;
           margin: 0 auto;
-          padding-top: 120px;
+          padding-top: 80px; /* wysokość topbar + margines */
       }
       /* Nasz topbar */
       .custom-topbar {
@@ -131,7 +129,7 @@ def main():
     # Wstrzyknięcie topbaru
     inject_topbar_assets()
 
-    # Parametry z URL
+    # Pobranie parametrów z URL
     params = st.query_params
     lang = params.get('lang', ['en'])[0]
     page = params.get('page', ['prediction'])[0]
@@ -155,7 +153,7 @@ def main():
         unsafe_allow_html=True
     )
 
-    # Strony
+    # Renderowanie stron
     if page == 'prediction':
         st.title('🕷️ Klasyfikator gatunków Theraphosidae' if lang == 'pl' else '🕷️ Theraphosidae Species Classifier')
         uploaded = st.file_uploader(
