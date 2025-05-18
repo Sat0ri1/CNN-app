@@ -60,12 +60,15 @@ def set_bg_hack_url():
 def tarantupedia_link(name):
     """Generuje link do tarantupedia.com"""
     parts = name.lower().split()
+    genus = parts[0]
     if len(parts) == 1:
-        return f"https://www.tarantupedia.com/theraphosinae/{parts[0]}"
-    else:
-        genus = parts[0]
+        return f"https://www.tarantupedia.com/theraphosinae/{genus}"
+    elif len(parts) == 2:
         species = '-'.join(parts)
-        return f"https://www.tarantupedia.com/theraphosinae/{genus}-{species}"
+        return f"https://www.tarantupedia.com/theraphosinae/{species}"
+    else:
+        species = '-'.join(parts[1:])
+        return f"https://www.tarantupedia.com/theraphosinae/{genus}/{species}"
 
 def main():
     set_bg_hack_url()
