@@ -42,13 +42,15 @@ def inject_topbar_assets():
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
 
     <style>
-      /* Ukryj domyślny Streamlit header i footer */
-      header, footer { display: none !important; }
+      /* Ukryj domyślne elementy Streamlita */
+      #MainMenu {visibility: hidden;}
+      header {visibility: hidden;}
+      footer {visibility: hidden;}
       /* Centrowanie i odstęp pod nasz topbar */
       .block-container {
           max-width: 800px;
           margin: 0 auto;
-          padding-top: 80px; /* wysokość topbar + margines */
+          padding-top: 80px;
       }
       /* Nasz topbar */
       .custom-topbar {
