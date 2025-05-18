@@ -42,21 +42,20 @@ def load_trained_model():
 model = load_trained_model()
 
 def set_bg_hack_url():
-    """Ustawia tło z obrazem na pełnym ekranie."""
+    """Ustawia tło z obrazem."""
     st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("https://i.imgur.com/kVAAQNv.jpeg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+         f"""
+         <style>
+         .stApp {{
+             background: url("https://i.imgur.com/27EU8Ta.png");
+             background-size: cover;
+             background-position: top right 18vw;
+             background-repeat: no-repeat;
+         }}
+         </style>
+         """,
+         unsafe_allow_html=True
+     )
 
 def tarantupedia_link(name):
     """Generuje link do tarantupedia.com"""
