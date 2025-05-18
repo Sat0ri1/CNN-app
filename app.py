@@ -82,7 +82,7 @@ def main():
     )
 
     if page == ("Prediction" if lang == "English" else "Predykcja"):
-        st.title("🕷️ Theraphosidae Species Classifier" if lang == "English" else "🕷️ Klasyfikator gatunków Theraphosidae")
+        st.title("Theraphosidae Species Classifier" if lang == "English" else "🕷️ Klasyfikator gatunków Theraphosidae")
 
         uploaded_file = st.file_uploader(
             "Upload an image (top view of full spider)" if lang == "English" else "Prześlij zdjęcie (cały pająk, widok z góry)",
