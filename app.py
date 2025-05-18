@@ -80,7 +80,8 @@ def main():
         options=[
             "Prediction" if lang == "English" else "Predykcja",
             "Species List" if lang == "English" else "Lista gatunków",
-            "Usage" if lang == "English" else "Instrukcja"
+            "Usage" if lang == "English" else "Instrukcja",
+            "Credits" if lang == "English" else "Podziękowania"
         ]
     )
 
@@ -135,6 +136,29 @@ def main():
             - Aplikacja służy do rozpoznawaniu ptaszników o ubarwieniu osobnika dorosłego, w przypadkach gdy dymorfizm płciowy jest znaczący aplikacja rozpoznaje tylko samice.
             - Niestandardowe ustawienie pająka, zmiany kolorów ze względu na śiweżo przebytą wylinkę lub zanik kolorów ze względu na długi okres bez procesu przechodzenia wylinki mogą wpłynąć na jakość predykcji
             """)
+
+    elif page == ("Credits" if lang == "English" else "Podziękowania"):
+        st.title("Credits" if lang == "English" else "Podziękowania")
+        if lang == "English":
+            st.markdown("""
+            Thanks to the breeders for sharing their photos used for training the model:
+            """)
+        else:
+            st.markdown("""
+            Podziękowania dla hodowców za udostępnienie zdjęć wykorzystanych do treningu modelu:
+            """)
+
+        breeders = {
+            "Fornal": "https://www.facebook.com/fornalpets?locale=pl_PL",
+            "Spider Shop": "https://www.facebook.com/spidershoppl?locale=pl_PL",
+            "SpidersOnline": "https://www.facebook.com/spidershoppl?locale=pl_PL",
+            "Arent": "https://www.facebook.com/arent.spiders?locale=pl_PL",
+            "Arachnohobbia": "https://www.facebook.com/profile.php?id=100064755876648&locale=pl_PL",
+          
+        }
+
+        for name, fb_link in breeders.items():
+            st.markdown(f"- [{name}]({fb_link})")
 
 if __name__ == "__main__":
     main()
