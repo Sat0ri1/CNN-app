@@ -1,4 +1,4 @@
-Acanthoscurria
+Acanthoscurria geniculata
 Amazonius germani
 Aphonopelma seemanni
 Augcephalus
@@ -35,21 +35,21 @@ Cyriocosmus elegans
 Cyriocosmus leetzi
 Cyriocosmus perezmilesi
 Cyriocosmus ritae
-Cyriopagopus (albostriatus, longipes, minax, paganus or vonwrithi)
+Cyriopagopus albostriatus
 Cyriopagopus hainanus
 Cyriopagopus lividus
 Cyriopagopus schmidti
-Davus
+Davus pentaloris
 Dolichothele diamantinensis
 Encyocratella olivacea
 Ephebopus cyanognathus
 Ephebopus murinus
 Eucratoscelus pachypus
-Grammostola iheringi or actaeon
+Grammostola iheringi
 Grammostola pulchra
 Grammostola pulchripes
 Grammostola rosea
-Hapalopus
+Hapalopus formosus
 Haplocosmia himalayana
 Harpactira cafreriana
 Harpactira pulchripes
@@ -95,7 +95,7 @@ Tapinauchenius plumipes
 Theraphosa
 Thrixopelma ockerti
 Tliltocatl albopilosus
-Tliltocatl vagans or kahlenbergi
+Tliltocatl vagans
 Typhochlaena seladonia
 Vitalius chromatus
 Xenesthis immanis
