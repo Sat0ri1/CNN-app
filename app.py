@@ -2,6 +2,7 @@ import streamlit as st
 import os
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
+from tensorflow.keras.applications.inception_v3 import preprocess_input
 import numpy as np
 import gdown
 
@@ -94,9 +95,10 @@ def main():
         )
 
         if uploaded_file is not None:
-            img = image.load_img(uploaded_file, target_size=(224, 224))
+            img = image.load_img(uploaded_file, target_size=(299, 299))
             img_array = image.img_to_array(img)
-            img_array = np.expand_dims(img_array, axis=0) / 255.0
+            img_array = np.expand_dims(img_array, axis=0)
+            img_array = preprocess_input(img_array)
 
             predictions = model.predict(img_array)
             predicted_index = np.argmax(predictions)
