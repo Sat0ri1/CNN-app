@@ -97,7 +97,7 @@ def main():
         if uploaded_file is not None:
             img = image.load_img(uploaded_file, target_size=(299, 299))
             img_array = image.img_to_array(img)
-            img_array = np.expand_dims(img_array, axis=0)
+            img_array = np.expand_dims(img_array, axis=0).astype(np.float32)
             img_array = preprocess_input(img_array)
 
             predictions = model.predict(img_array)
