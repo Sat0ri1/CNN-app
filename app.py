@@ -59,25 +59,24 @@ def set_bg_hack_url():
      )
 
 def tarantupedia_link(name):
-    """Generuje link do tarantupedia.com z logiką dla nazw z 'or'."""
-    if " or " in name.lower():
+    """Generuje link do tarantupedia.com. 
+    Jeśli w nazwie występuje 'or', przekierowuje tylko do rodzaju (genus).
+    """
+    name = name.strip()
+
+    if ' or ' in name.lower():
+        # Zawsze bierzemy tylko pierwszy wyraz jako genus
         genus = name.split()[0].lower()
         return f"https://www.tarantupedia.com/theraphosinae/{genus}"
 
     parts = name.lower().split()
-  
     if len(parts) == 1:
         return f"https://www.tarantupedia.com/theraphosinae/{parts[0]}"
-      
     elif len(parts) == 2:
-        species = '-'.join(parts)
-        return f"https://www.tarantupedia.com/theraphosinae/{species}"
-      
+        return f"https://www.tarantupedia.com/theraphosinae/{parts[0]}-{parts[1]}"
     else:
+        return f"https://www.tarantupedia.com/theraphosinae/{parts[0]}"
 
-        genus = parts[0]
-        species = '-'.join(parts[1:])
-        return f"https://www.tarantupedia.com/theraphosinae/{genus}/{species}"
 
 def main():
     set_bg_hack_url()
