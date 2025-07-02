@@ -2,7 +2,7 @@
 
 **Author:** Paweł Grygielski  
 **Description:**  
-A CNN model for recognizing Theraphosidae (tarantula) species based on images.  
+A CNN models for recognizing Theraphosidae (tarantula) species based on images.  
 Built with TensorFlow/Keras and image preprocessing to classify 101 species.
 
 ---
@@ -22,7 +22,8 @@ Built with TensorFlow/Keras and image preprocessing to classify 101 species.
 ## Project Overview
 
 This project uses a convolutional neural network (CNN) to classify tarantula species from images.  
-The model was trained on approximately 110-130 images per class, with data augmentation techniques applied to improve generalization.
+There were two models trained on approximately 110-130 images per class, with data augmentation techniques applied to improve generalization.
+Both models and database were built by me and are too heavy for github. Online app is linked below (Running on Streamlit Cloud).
 
 ---
 
