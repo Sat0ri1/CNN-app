@@ -55,10 +55,12 @@ Just click here to open the app:
 
 ## List of Recognized Species
 The model recognizes the following 101 species and genera, mostly those popular in the pet trade.  
-The full list is available in the [Species List file](./species_list.txt).
+The full list is available in the [Species List file](./species_list.txt) and in Streamlit app linked above.
 
 ## How It Works
-The model is a CNN with convolutional layers and batch normalization for stable training.
+First model built from scratch is a CNN with convolutional layers and batch normalization for stable training.
+
+Secound model is using transfer learning techniques and is based on InceptionV3 by Google.
 
 Data augmentation techniques such as rotation, shifting, zooming, flipping, and brightness adjustment are used to improve generalization.
 
