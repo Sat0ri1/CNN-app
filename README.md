@@ -25,6 +25,8 @@ This project uses a convolutional neural network (CNN) to classify tarantula spe
 There were two models trained on approximately 110-130 images per class, with data augmentation techniques applied to improve generalization.
 Both models and database were built by me and are too heavy for github. Online app is linked below (Running on Streamlit Cloud).
 
+Paper is available in pdf (only in polish for now).
+
 ---
 
 ## Installation and Usage
