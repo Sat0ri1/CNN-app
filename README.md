@@ -51,7 +51,7 @@ streamlit run app.py
 
 ## Running on Streamlit Cloud
 Just click here to open the app:  
-[Open Theraphosidae Species Classifier](https://share.streamlit.io/YourUsername/YourRepo/main/app.py)
+[Open Theraphosidae Species Classifier](https://tarantula-species-identifier.streamlit.app)
 
 ## List of Recognized Species
 The model recognizes the following 101 species and genera, mostly those popular in the pet trade.  
