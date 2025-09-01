@@ -34,7 +34,7 @@ def download_model():
         with st.spinner('📥 Pobieranie modelu...'):
             gdown.download(MODEL_URL, MODEL_PATH, quiet=True)
 
-# @st.cache_resource  # tymczasowo zakomentowane
+@st.cache_resource  # tymczasowo zakomentowane
 def load_trained_model():
     download_model()
     from tensorflow.keras.models import load_model
